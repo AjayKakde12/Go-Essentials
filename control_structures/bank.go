@@ -17,7 +17,6 @@ func writeBalanceToFile(balance float64) {
 func getBalanceFromFile() (float64, error) {
 	data, err := os.ReadFile(BALANCE_FILE)
 	if err != nil {
-		writeBalanceToFile(0)
 		return 0, errors.New("storage not found")
 	}
 	balanceText := string(data)
@@ -34,6 +33,7 @@ func main() {
 		fmt.Println("ERROR")
 		fmt.Println(err)
 		fmt.Println("-----------------------------")
+		panic("Time to panic.............")
 	}
 	var choice int
 
