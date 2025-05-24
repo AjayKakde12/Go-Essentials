@@ -1,29 +1,13 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"time"
+
+	"github.com/AjayKakde12/Go-Essentials/structs/user"
 )
 
-type User struct {
-	firstName string
-	lastName  string
-	birthdate string
-	createdAt time.Time
-}
-
-func (user User) outputUserDetails() {
-	fmt.Println(user.firstName, user.lastName, user.birthdate)
-}
-
-func (user *User) clearUserName() {
-	(*user).firstName = ""
-	(*user).lastName = ""
-}
-
-func outputUserDetailsUsingPointer(user *User) {
-	fmt.Println((*user).firstName, (*user).lastName, (*user).birthdate)
+func outputUserDetailsUsingPointer(u *user.User) {
+	fmt.Println((*u).FirstName, (*u).LastName, (*u).Birthdate)
 }
 
 func getUserData(promptText string) string {
@@ -33,25 +17,13 @@ func getUserData(promptText string) string {
 	return value
 }
 
-func newUser(firstName, lastName, birthdate string) (*User, error) {
-	if firstName == "" || lastName == "" || birthdate == "" {
-		return nil, errors.New("you should have entered first name, last name & birth date")
-	}
-	return &User{
-		firstName: firstName,
-		lastName:  lastName,
-		birthdate: birthdate,
-		createdAt: time.Now(),
-	}, nil
-}
-
 func main() {
 
 	firstName := getUserData("Please enter your first name: ")
 	lastName := getUserData("Please enter your last name: ")
 	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
-	appUser, err := newUser(firstName, lastName, birthdate)
+	appUser, err := user.NewUser(firstName, lastName, birthdate)
 
 	if err != nil {
 		panic(err)
@@ -59,9 +31,9 @@ func main() {
 
 	// ... do something awesome with that gathered data!
 
-	appUser.outputUserDetails()
+	appUser.OutputUserDetails()
 	outputUserDetailsUsingPointer(appUser)
 
-	appUser.clearUserName()
-	appUser.outputUserDetails()
+	appUser.ClearUserName()
+	appUser.OutputUserDetails()
 }
