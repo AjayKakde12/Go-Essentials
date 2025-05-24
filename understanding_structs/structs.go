@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -28,22 +29,38 @@ func outputUserDetailsUsingPointer(user *User) {
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
-	fmt.Scan(&value)
+	fmt.Scanln(&value)
 	return value
 }
 
-func main() {
-	appUser := User{
-		firstName: getUserData("Please enter your first name: "),
-		lastName:  getUserData("Please enter your last name: "),
-		birthdate: getUserData("Please enter your birthdate (MM/DD/YYYY): "),
+func newUser(firstName, lastName, birthdate string) (*User, error) {
+	if firstName == "" || lastName == "" || birthdate == "" {
+		return nil, errors.New("you should have entered first name, last name & birth date")
+	}
+	return &User{
+		firstName: firstName,
+		lastName:  lastName,
+		birthdate: birthdate,
 		createdAt: time.Now(),
+	}, nil
+}
+
+func main() {
+
+	firstName := getUserData("Please enter your first name: ")
+	lastName := getUserData("Please enter your last name: ")
+	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+
+	appUser, err := newUser(firstName, lastName, birthdate)
+
+	if err != nil {
+		panic(err)
 	}
 
 	// ... do something awesome with that gathered data!
 
 	appUser.outputUserDetails()
-	outputUserDetailsUsingPointer(&appUser)
+	outputUserDetailsUsingPointer(appUser)
 
 	appUser.clearUserName()
 	appUser.outputUserDetails()
