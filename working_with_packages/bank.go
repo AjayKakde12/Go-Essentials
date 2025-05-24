@@ -1,34 +1,15 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"os"
-	"strconv"
+
+	"github.com/AjayKakde12/Go-Essentials/working-with-packages/fileops"
 )
 
 const BALANCE_FILE string = "balance.txt"
 
-func writeBalanceToFile(balance float64) {
-	balancetext := fmt.Sprint(balance)
-	os.WriteFile(BALANCE_FILE, []byte(balancetext), 0644)
-}
-
-func getBalanceFromFile() (float64, error) {
-	data, err := os.ReadFile(BALANCE_FILE)
-	if err != nil {
-		return 0, errors.New("storage not found")
-	}
-	balanceText := string(data)
-	balance, err := strconv.ParseFloat(balanceText, 64)
-	if err != nil {
-		return 1000, errors.New("storage contains invalid data")
-	}
-	return balance, nil
-}
-
 func main() {
-	var accountBalance, err = getBalanceFromFile()
+	var accountBalance, err = fileops.GetFloatFromFile(BALANCE_FILE)
 	if err != nil {
 		fmt.Println("ERROR")
 		fmt.Println(err)
@@ -56,7 +37,7 @@ func main() {
 			}
 			accountBalance += depositeAmount
 			fmt.Println("Balance updated: ", accountBalance)
-			writeBalanceToFile(accountBalance)
+			fileops.WriteFloatToFile(accountBalance, BALANCE_FILE)
 		} else if choice == 3 {
 			var withdrawMoney float64
 			fmt.Print("Your withdraw amount: ")
@@ -67,7 +48,7 @@ func main() {
 			}
 			accountBalance -= withdrawMoney
 			fmt.Println("Balance updated: ", accountBalance)
-			writeBalanceToFile(accountBalance)
+			fileops.WriteFloatToFile(accountBalance, BALANCE_FILE)
 		} else {
 			fmt.Println("Goodbye!")
 			break
