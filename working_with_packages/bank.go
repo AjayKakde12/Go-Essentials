@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"github.com/Pallinder/go-randomdata"
+
 	"github.com/AjayKakde12/Go-Essentials/working-with-packages/fileops"
 )
 
@@ -55,5 +57,5 @@ func main() {
 		}
 	}
 
-	fmt.Println("Thanks for chosing our bank!")
+	fmt.Printf("Thanks for chosing %s & %s bank!", randomdata.LastName(), randomdata.LastName())
 }
