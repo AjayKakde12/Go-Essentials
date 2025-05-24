@@ -23,7 +23,7 @@ func main() {
 	lastName := getUserData("Please enter your last name: ")
 	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
-	appUser, err := user.NewUser(firstName, lastName, birthdate)
+	appUser, err := user.New(firstName, lastName, birthdate)
 
 	if err != nil {
 		panic(err)
@@ -31,9 +31,9 @@ func main() {
 
 	// ... do something awesome with that gathered data!
 
-	appUser.OutputUserDetails()
+	(*appUser).OutputUserDetails()
 	outputUserDetailsUsingPointer(appUser)
 
-	appUser.ClearUserName()
-	appUser.OutputUserDetails()
+	(*appUser).ClearUserName()
+	(*appUser).OutputUserDetails()
 }
