@@ -12,6 +12,10 @@ type User struct {
 	createdAt time.Time
 }
 
+func (user User) outputUserDetails() {
+	fmt.Println(user.firstName, user.lastName, user.birthdate)
+}
+
 func main() {
 
 	appUser := User{
@@ -23,12 +27,8 @@ func main() {
 
 	// ... do something awesome with that gathered data!
 
-	outputUserDetails(appUser)
+	appUser.outputUserDetails()
 	outputUserDetailsUsingPointer(&appUser)
-}
-
-func outputUserDetails(user User) {
-	fmt.Println(user.firstName, user.lastName, user.birthdate)
 }
 
 func outputUserDetailsUsingPointer(user *User) {
