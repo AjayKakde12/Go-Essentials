@@ -6,8 +6,8 @@ import (
 	"github.com/AjayKakde12/Go-Essentials/structs/user"
 )
 
-func outputUserDetailsUsingPointer(u *user.User) {
-	fmt.Println((*u).FirstName, (*u).LastName, (*u).Birthdate)
+func outputUserDetailsUsingPointer(u *user.User, admin *user.Admin) {
+	fmt.Println((*u).FirstName, (*u).LastName, (*u).Birthdate, (*admin).Email, (*admin).Password)
 }
 
 func getUserData(promptText string) string {
@@ -22,18 +22,24 @@ func main() {
 	firstName := getUserData("Please enter your first name: ")
 	lastName := getUserData("Please enter your last name: ")
 	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+	email := getUserData("Please enter your email: ")
+	password := getUserData("Please enter password")
 
-	appUser, err := user.New(firstName, lastName, birthdate)
+	appUser, errUser := user.New(firstName, lastName, birthdate)
+	if errUser != nil {
+		panic(errUser)
+	}
 
-	if err != nil {
-		panic(err)
+	admin, errAdmin := user.NewAdmin(email, password, appUser)
+	if errAdmin != nil {
+		panic(errAdmin)
 	}
 
 	// ... do something awesome with that gathered data!
 
-	(*appUser).OutputUserDetails()
-	outputUserDetailsUsingPointer(appUser)
+	admin.OutputUserDetails()
+	outputUserDetailsUsingPointer(appUser, admin)
 
-	(*appUser).ClearUserName()
-	(*appUser).OutputUserDetails()
+	admin.ClearUserName()
+	admin.OutputUserDetails()
 }
