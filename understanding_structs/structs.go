@@ -14,9 +14,7 @@ type User struct {
 
 func main() {
 
-	var appUser User
-
-	appUser = User{
+	appUser := User{
 		firstName: getUserData("Please enter your first name: "),
 		lastName:  getUserData("Please enter your last name: "),
 		birthdate: getUserData("Please enter your birthdate (MM/DD/YYYY): "),
@@ -26,10 +24,15 @@ func main() {
 	// ... do something awesome with that gathered data!
 
 	outputUserDetails(appUser)
+	outputUserDetailsUsingPointer(&appUser)
 }
 
 func outputUserDetails(user User) {
 	fmt.Println(user.firstName, user.lastName, user.birthdate)
+}
+
+func outputUserDetailsUsingPointer(user *User) {
+	fmt.Println((*user).firstName, (*user).lastName, (*user).birthdate)
 }
 
 func getUserData(promptText string) string {
